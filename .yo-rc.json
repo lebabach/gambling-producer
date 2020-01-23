@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "microservices.gambling.producer"
+    },
+    "jhipsterVersion": "6.6.0",
+    "applicationType": "microservice",
+    "baseName": "gamblingproducer",
+    "packageName": "microservices.gambling.producer",
+    "packageFolder": "microservices/gambling/producer",
+    "serverPort": "8081",
+    "authenticationType": "uaa",
+    "uaaBaseName": "uaa",
+    "cacheProvider": "no",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "no",
+    "devDatabaseType": "no",
+    "prodDatabaseType": "no",
+    "searchEngine": false,
+    "messageBroker": "kafka",
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "NWM0Y2Q5MzcxMzFkOTk5NjUyNTlkMDlhYzhmNjU2ODJiNjI4ZGY3YWNlZThlZWQwNjE2YjVlZDUzNWQxODFkOWMxNjJiMmM2ZDBiZTc5ODc5YjJiN2YxMmExNTYyMTMyNjdmOTkxZWRlYmFmNmJkOWIwOWYxZjEyY2I3NTRjNjc=",
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1579786072544,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
