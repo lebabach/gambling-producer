@@ -42,17 +42,19 @@ spring:
   jackson:
     serialization:
       indent-output: true
-  kafka:
-    consumer:
-      bootstrap-servers: localhost:9092
-      group-id: group_id
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost
+          defaultBrokerPort: 9092
+          minPartitionCount: 2
+          autoCreateTopics: true
+          autoAddPartitions: true
+      bindings:
+        sellingOrderOutputChannel:
+          destination: dev.sellingOrder
+          contentType: application/json
   mail:
     host: localhost
     port: 25
