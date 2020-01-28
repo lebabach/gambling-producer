@@ -8,7 +8,7 @@ services:
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
   gateway:
-    image: lebabach/microservices-gateway:0.0.9-SNAPSHOT
+    image: lebabach/microservices-gateway:0.0.10-SNAPSHOT
     environment:
       - SPRING_PROFILES_ACTIVE=dev,swagger
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
@@ -18,7 +18,7 @@ services:
     ports:
       - 8080:8080
   uaa:
-    image: lebabach/microservices-uaa:0.0.1-SNAPSHOT
+    image: lebabach/microservices-uaa:0.0.4-SNAPSHOT
     environment:
       - SPRING_PROFILES_ACTIVE=dev,swagger
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
@@ -50,4 +50,13 @@ services:
     extends:
       file: kafka.yml
       service: zookeeper
-
+  gambling-producer:
+    image: lebabach/gambling-producer:0.0.5-SNAPSHOT
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev,swagger
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
+      - JHIPSTER_SLEEP=30
+      - JHIPSTER_REGISTRY_PASSWORD=admin
+    ports:
+      - 8081:8081
