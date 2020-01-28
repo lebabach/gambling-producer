@@ -1,8 +1,7 @@
-package microservices.gambling.producer.message.helper;
+package microservices.gambling.producer.service;
 
 import lombok.extern.slf4j.Slf4j;
-import microservices.gambling.producer.service.dto.AbstractEntityDTO;
-import org.apache.commons.lang3.StringUtils;
+import microservices.gambling.producer.service.dto.MessageDTO;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -11,37 +10,29 @@ import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.util.MimeTypeUtils;
 
-import java.util.Map;
-
 @Slf4j
-public class MessageSender <T extends AbstractEntityDTO>{
+public abstract class MessageSenderAbstractService {
     private final MessageChannel messageChannel;
 
-    public MessageSender(MessageChannel messageChannel) {
+    public MessageSenderAbstractService(MessageChannel messageChannel) {
         this.messageChannel = messageChannel;
     }
 
-    /**
-     * @param messageBody the entity that need to be sent as a payload
-     * @param messageHeaderMap the map that will be sent as a message header
-     */
-    public boolean sendMessage(T messageBody, Map<String, Object> messageHeaderMap) {
-
-        Message<T> message = MessageBuilder.withPayload(messageBody)
+    public void sendMessage(MessageDTO msg) {
+        Message message = MessageBuilder.withPayload(msg.getData())
                                            .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                                           .copyHeaders(messageHeaderMap)
+                                           .setHeader(KafkaHeaders.MESSAGE_KEY,msg.getMessageKey().getBytes())
+                                           .copyHeaders(msg.getHeader())
                                            .build();
 
         boolean sent = messageChannel.send(message);
-
         if (sent) {
-            log.info("{} event message is sent successfully.", messageBody);
+            log.info("{} message is sent successfully.", msg.toString());
         } else {
-            String errorMessage = String.format("Unable to send %s message.", messageBody);
+            String errorMessage = String.format("Unable to send %s message.", msg.toString());
             log.error(errorMessage);
             throw new MessageDeliveryException(errorMessage);
         }
-        return true;
     }
 
 }
